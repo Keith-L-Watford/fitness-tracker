@@ -8,7 +8,7 @@ const WorkoutPlanSchema = new Schema({
             required: true,
             trim: true,
         },
-        models: [
+        workout: [
             {
                 type: Schema.Types.ObjectId,
                 ref: "Exercise"
