@@ -7,7 +7,13 @@ const WorkoutPlanSchema = new Schema({
             type: String,
             required: true,
             trim: true,
-        }
+        },
+        models: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Exercise"
+            }
+        ]
 });
 
 const WorkoutPlan = mongoose.model("WorkoutPlan", WorkoutPlanSchema)
