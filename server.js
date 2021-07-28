@@ -13,8 +13,8 @@ const app = express();
 
 app.use(logger("dev"));
 
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static("public"));
 
@@ -22,8 +22,6 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/fitnessTracker"
 
 app.use(apiRoutes)
 app.use(htmlRoutes)
-
-
 
 // const databaseUrl = "fitnessTracker";
 // const collections = ["exercises"];
@@ -33,7 +31,6 @@ app.use(htmlRoutes)
 // db.on("error", error => {
 //     console.log("Database Error:", error);
 //   });
-  
 
 app.listen(PORT, () => {
   console.log(`App running on port: ${PORT}!`);
