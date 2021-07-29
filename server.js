@@ -4,7 +4,7 @@ const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose")
 
-const apiRoutes = require("./controllers/api-routes")
+const apiRoutes = require("./controllers/api/api-routes")
 const htmlRoutes = require("./controllers/html-routes")
 
 const PORT = process.env.PORT || 3000;
@@ -25,11 +25,11 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/fitnessTracker"
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
-  useFindAndModify: false
+  useFindAndModify: false,
 });
 
 // console.log(apiRoutes);
-console.log(htmlRoutes);
+// console.log(htmlRoutes);
 
 app.use(apiRoutes)
 app.use(htmlRoutes)
