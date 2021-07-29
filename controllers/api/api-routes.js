@@ -10,13 +10,20 @@ const Workout = require('../../models/workoutModel.js');
 // aggregate??
 // Get all workouts
 router.get("/api/workouts", (req, res) => {
-  Workout.workouts.find({}, (err, workout) => {
-    if (err) {
-      res.json(err);
-    } else {
-      res.status(400).json(workout);
-    }
-  });
+  Workout.find({})
+    .then((db) => {
+      console.log(db);
+      res.json(db);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });   
+  //   if (err) {
+  //     res.json(err);
+  //   } else {
+  //     res.status(400).json();
+  //   }
+  // });
 });
 
 // const res = await fetch("/api/workouts", {
@@ -41,14 +48,14 @@ router.post("/api/workouts", ({
 // agregate??
 // GET workout range
 router.get("/api/workouts/range", (req, res) => {
-  //   Workout.find({})
-  //     .then(db => {
+    Workout.find({})
+      .then(db => {
 
-  //       res.json(db);
-  //     })
-  //     .catch(err => {
-  //       res.status(400).json(err);
-  //     });
+        res.json(db);
+      })
+      .catch(err => {
+        res.status(400).json(err);
+      });
 });
 
 
@@ -57,8 +64,9 @@ router.get("/api/workouts/range", (req, res) => {
 // PUT new exercise
 router.put("/api/workouts/:id", (req, res) => {
   // console.log(req.params.id);
-  Workout.findByIdAndUpdate({
-      _id: params.id
+  Workout.findByIdAndUpdate(
+    {
+      _id: req.params.id
     }, {
       // $inc: { totalDuration: req.body.duration },
       $push: {
