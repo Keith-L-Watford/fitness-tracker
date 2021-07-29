@@ -6,15 +6,8 @@ const Workout = require('../models/workoutModel.js');
 
 // Get all workouts
 router.get("/api/workouts", (req, res) => {
-    Workout.find({})
-    .then(db => {
-
-        res.json(db);
-      })
-      .catch(err => {
-        res.status(400).json(err);
-      });
-});
+    
+  });
 
 // GET workout range (?????)
 router.get("/api/workouts/range", (req, res) => {
@@ -29,15 +22,16 @@ router.get("/api/workouts/range", (req, res) => {
 });
     
 
-// POST(put???) new exercise
-router.put("/api/workouts/:id", (req , res) => {
-    Workout.findOneAndUpdate(
+// PUT new exercise
+router.put("/api/workouts/:id", ( { body, params } , res) => {
+  console.log(req.params.id);
+    Workout.findByIdAndUpdate(
+        
+            params.id,
+        
         {
-            _id: req.params.id
-        },
-        {
-          $inc: { totalDuration: req.body.duration },
-          $push: { exercises: req.body }
+          // $inc: { totalDuration: req.body.duration },
+          $push: { exercises: body }
         },
 
 
