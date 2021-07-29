@@ -1,15 +1,22 @@
 // utilize router.
 const router = require('express').Router();
-
 // create an instance of model
 const Workout = require('../models/workoutModel.js');
 
+// ===============================================
+
+
+// res = await fetch("/api/workouts");
+// aggregate??
 // Get all workouts
 router.get("/api/workouts", (req, res) => {
     
   });
 
-// GET workout range (?????)
+  // async getWorkoutsInRange() {
+    // const res = await fetch(`/api/workouts/range`);
+    // agregate??
+// GET workout range
 router.get("/api/workouts/range", (req, res) => {
     Workout.find({})
     .then(db => {
@@ -22,6 +29,8 @@ router.get("/api/workouts/range", (req, res) => {
 });
     
 
+// const res = await fetch("/api/workouts/" + id, {
+//   method: "PUT",
 // PUT new exercise
 router.put("/api/workouts/:id", ( { body, params } , res) => {
   console.log(req.params.id);
@@ -33,8 +42,6 @@ router.put("/api/workouts/:id", ( { body, params } , res) => {
           // $inc: { totalDuration: req.body.duration },
           $push: { exercises: body }
         },
-
-
         { new: true })
         .then(dbWorkout => {
           res.json(dbWorkout);
@@ -46,6 +53,8 @@ router.put("/api/workouts/:id", ( { body, params } , res) => {
 });
 
 
+// const res = await fetch("/api/workouts", {
+//   method: "POST",
 // POST new workout(???)
 router.post("/api/workouts", ({ body }, res) => {
     Workout.create(body)
