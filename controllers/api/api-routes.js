@@ -9,27 +9,26 @@ const Workout = require('../../models/workoutModel.js');
 // res = await fetch("/api/workouts");
 // aggregate??
 // Get all workouts
-router.get("/api/workouts", (req, res) => {
-  Workout.find({})
-    .then((db) => {
-      console.log(db);
+router.get("/", (req, res) => {
+  Workout.aggregate([{
+    $addFields: {
+      totalDuration: { $sum: "$exercises.duration" }
+    }
+  }]).sort({ day: -1 }).limit(7)
+
+    .then(db => {
       res.json(db);
     })
     .catch(err => {
+      console.log(err);
       res.status(400).json(err);
-    });   
-  //   if (err) {
-  //     res.json(err);
-  //   } else {
-  //     res.status(400).json();
-  //   }
-  // });
+    });
 });
 
 // const res = await fetch("/api/workouts", {
 //   method: "POST",
 // POST new workout(???)
-router.post("/api/workouts", ({
+router.post("/", ({
   body
 }, res) => {
   Workout.create(body)
@@ -47,15 +46,12 @@ router.post("/api/workouts", ({
 // const res = await fetch(`/api/workouts/range`);
 // agregate??
 // GET workout range
-router.get("/api/workouts/range", (req, res) => {
-    Workout.find({})
-
-    // aggregate([{
-    //   $addFields: {
-    //     totalHomework: { $sum: "$homework" } ,
-    //     totalQuiz: { $sum: "$quiz" }
-    //   }
-    // }])
+router.get("/range", (req, res) => {
+    Workout.aggregate([{
+      $addFields: {
+        totalDuration: { $sum: "$exercises.duration" }
+      }
+    }]).sort({ day: -1 }).limit(7)
 
 
       .then(db => {
@@ -67,11 +63,10 @@ router.get("/api/workouts/range", (req, res) => {
       });
 });
 
-
 // const res = await fetch("/api/workouts/" + id, {
 //   method: "PUT",
 // PUT new exercise
-router.put("/api/workouts/:id", (req, res) => {
+router.put("/:id", (req, res) => {
   // console.log(req.params.id);
   Workout.findByIdAndUpdate(
     {
@@ -91,8 +86,6 @@ router.put("/api/workouts/:id", (req, res) => {
       res.status(400).json(err);
     });
 });
-
-
 
 // https://docs.mongodb.com/manual/reference/operator/aggregation/
 module.exports = router;
